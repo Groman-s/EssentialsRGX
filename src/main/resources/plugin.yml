@@ -1,0 +1,9 @@
+name: EssentialsRGX
+main: com.goyanov.essentials.main.EssentialsRGX
+version: 1.0.0
+api-version: 1.13
+commands:
+  rtp:
+    description: "Телепортация в случайную точку мира"
+    permission: EssentialsRGX.command.rtp
+    permission-message: "Ты не можешь этого сделать!"

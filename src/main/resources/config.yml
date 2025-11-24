@@ -1,0 +1,6 @@
+commands:
+  rtp:
+    enabled: true
+    radius:
+      min: 2000
+      max: 20000
