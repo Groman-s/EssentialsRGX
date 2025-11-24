@@ -21,8 +21,8 @@ class CommandRtp : CommandExecutor {
         val minRadius = config.getInt("commands.rtp.radius.min")
         val maxRadius = config.getInt("commands.rtp.radius.max")
 
-        val x = minRadius + Math.random() * (maxRadius - minRadius) + 0.5
-        val z = minRadius + Math.random() * (maxRadius - minRadius) + 0.5
+        val x = (minRadius + Math.random() * (maxRadius - minRadius)).toInt() + 0.5
+        val z = (minRadius + Math.random() * (maxRadius - minRadius)).toInt() + 0.5
         val y = sender.world.getHighestBlockYAt(x.toInt(), z.toInt()) + 1
 
         val loc = Location(sender.world, x, y.toDouble(), z)
