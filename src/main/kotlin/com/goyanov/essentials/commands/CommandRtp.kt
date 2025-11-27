@@ -1,14 +1,19 @@
 package com.goyanov.essentials.commands
 
 import com.goyanov.essentials.main.EssentialsRGX
+import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import java.util.*
 
 class CommandRtp : CommandExecutor {
+
+    companion object {
+        private val cooldowns: HashMap<UUID, Long> = HashMap()
+    }
 
     override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<out String?>): Boolean {
 
@@ -17,13 +22,19 @@ class CommandRtp : CommandExecutor {
             return true
         }
 
+        val config = EssentialsRGX.inst().config
+
+        val timeRemain = cooldowns[sender.uniqueId]?.minus(System.currentTimeMillis())
+        if (timeRemain != null && timeRemain > 0) {
+            sender.sendMessage("§cТы не можешь пользоваться случайной телепортацией ещё ${timeRemain/1000} секунд!")
+            return true
+        }
+
         val worldName = sender.world.name.lowercase()
         if (!sender.hasPermission("EssentialsRGX.command.rtp.world.$worldName")) {
             sender.sendMessage("§cУ тебя нет прав на случайную телепортацию в этом мире!")
             return true
         }
-
-        val config = EssentialsRGX.inst().config
 
         val minRadius = config.getInt("commands.rtp.radius.min")
         val maxRadius = config.getInt("commands.rtp.radius.max")
@@ -47,6 +58,14 @@ class CommandRtp : CommandExecutor {
         )
 
         sender.teleport(teleportLoc)
+
+        if (!sender.hasPermission("commands.rtp.unlimited")) {
+            val configCmdSecondsDelay = config.getInt("commands.rtp.delay-seconds")
+            cooldowns[sender.uniqueId] = System.currentTimeMillis() + configCmdSecondsDelay * 1000
+            Bukkit.getScheduler().scheduleSyncDelayedTask(EssentialsRGX.inst(), {
+                cooldowns.remove(sender.uniqueId)
+            }, configCmdSecondsDelay * 20L)
+        }
 
         return true
     }

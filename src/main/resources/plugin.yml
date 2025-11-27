@@ -7,3 +7,6 @@ commands:
     description: "Телепортация в случайную точку мира"
     permission: EssentialsRGX.command.rtp
     permission-message: "Ты не можешь этого сделать!"
+    aliases:
+      - tpr
+      - tprandom
