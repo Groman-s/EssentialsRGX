@@ -4,3 +4,8 @@ commands:
     radius:
       min: 2000
       max: 20000
+    unsafe-blocks-regex:
+      - LAVA
+      - WATER
+      - .*_LEAVES
+      - (TALL_)?SEAGRASS
