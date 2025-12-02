@@ -45,8 +45,8 @@ class CommandRtp : CommandExecutor {
         var teleportLoc: Location
 
         do {
-            val x = (minRadius + Math.random() * (maxRadius - minRadius)).toInt() + 0.5
-            val z = (minRadius + Math.random() * (maxRadius - minRadius)).toInt() + 0.5
+            val x = (if (Math.random() < 0.5) 1 else -1) * (minRadius + Math.random() * (maxRadius - minRadius)).toInt() + 0.5
+            val z = (if (Math.random() < 0.5) 1 else -1) * (minRadius + Math.random() * (maxRadius - minRadius)).toInt() + 0.5
             val y = sender.world.getHighestBlockYAt(x.toInt(), z.toInt())
 
             highestLoc = Location(sender.world, x, y.toDouble(), z)
