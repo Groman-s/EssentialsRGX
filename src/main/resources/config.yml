@@ -2,6 +2,7 @@ commands:
   rtp:
     enabled: true
     delay-seconds: 30
+    max-tries: 10
     radius:
       min: 2000
       max: 20000
