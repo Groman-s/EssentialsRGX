@@ -11,3 +11,6 @@ commands:
       - WATER
       - .*_LEAVES
       - (TALL_)?SEAGRASS
+  tpa:
+    enabled: true
+    request-lifetime-seconds: 60

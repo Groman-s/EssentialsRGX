@@ -1,6 +1,6 @@
 name: EssentialsRGX
 main: com.goyanov.essentials.main.EssentialsRGX
-version: 1.0.0
+version: 1.1.0
 api-version: 1.13
 commands:
   rtp:
@@ -10,3 +10,11 @@ commands:
     aliases:
       - tpr
       - tprandom
+  tpa:
+    description: "Запрос на телепортацию к игроку"
+    permission: EssentialsRGX.command.tpa
+    permission-message: "Ты не можешь этого сделать!"
+  tpaccept:
+    description: "Принятие запроса на телепортацию от игрока"
+    permission: EssentialsRGX.command.tpaccept
+    permission-message: "Ты не можешь этого сделать!"
