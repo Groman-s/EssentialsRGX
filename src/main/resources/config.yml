@@ -14,3 +14,7 @@ commands:
   tpa:
     enabled: true
     request-lifetime-seconds: 60
+
+auto-messages:
+  enabled: true
+  interval-seconds: 120

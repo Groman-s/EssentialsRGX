@@ -1,0 +1,4 @@
+auto-messages:
+  prefix: "&8[&cServer&8] &r"
+  messages:
+    - "Желаем вам приятной игры на сервере! ^_^"

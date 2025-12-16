@@ -2,6 +2,7 @@ package com.goyanov.essentials.main
 
 import com.goyanov.essentials.rtp.CommandRtp
 import com.goyanov.essentials.rtp.RandomTeleportViaCommand
+import com.goyanov.essentials.timers.AutoMessagesTimer
 import com.goyanov.essentials.tpa.CommandTpa
 import com.goyanov.essentials.tpa.CommandTpaccept
 import com.goyanov.essentials.tpa.PlayersTeleportToOthers
@@ -28,6 +29,11 @@ class EssentialsRGX : JavaPlugin() {
             getCommand("tpa")?.setExecutor(CommandTpa())
             getCommand("tpaccept")?.setExecutor(CommandTpaccept())
             server.pluginManager.registerEvents(PlayersTeleportToOthers(), this)
+        }
+
+        if (config.getBoolean("auto-messages.enabled")) {
+            val autoMessagesInterval = config.getLong("auto-messages.interval-seconds") * 20L
+            AutoMessagesTimer().runTaskTimer(this, autoMessagesInterval, autoMessagesInterval)
         }
     }
 }
