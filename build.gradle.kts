@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.1.20"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "com.goyanov"
@@ -18,7 +19,7 @@ dependencies {
 }
 
 tasks.register<Copy>("jarToPluginsFolder") {
-    from(tasks.jar)
+    from(tasks.shadowJar)
     into("C:\\Users\\Roman\\Documents\\Minecraft\\Сервер разработки\\plugins")
 }
 
