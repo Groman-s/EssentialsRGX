@@ -15,6 +15,13 @@ commands:
     enabled: true
     request-lifetime-seconds: 60
 
+tab:
+  enabled: true
+  update-ticks:
+    header: -1
+    footer: 20
+    player-names: 400
+
 auto-messages:
   enabled: true
   interval-seconds: 120

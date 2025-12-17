@@ -2,7 +2,9 @@ package com.goyanov.essentials.main
 
 import com.goyanov.essentials.rtp.CommandRtp
 import com.goyanov.essentials.rtp.RandomTeleportViaCommand
-import com.goyanov.essentials.timers.AutoMessagesTimer
+import com.goyanov.essentials.tab.SendTabToPlayers
+import com.goyanov.essentials.automessages.AutoMessagesTimer
+import com.goyanov.essentials.tab.TabUpdateTimer
 import com.goyanov.essentials.tpa.CommandTpa
 import com.goyanov.essentials.tpa.CommandTpaccept
 import com.goyanov.essentials.tpa.PlayersTeleportToOthers
@@ -20,20 +22,28 @@ class EssentialsRGX : JavaPlugin() {
 
         saveDefaultConfig()
 
+        val pm = server.pluginManager
+
         if (config.getBoolean("commands.rtp.enabled")) {
             getCommand("rtp")?.setExecutor(CommandRtp())
-            server.pluginManager.registerEvents(RandomTeleportViaCommand(), this)
+            pm.registerEvents(RandomTeleportViaCommand(), this)
         }
 
         if (config.getBoolean("commands.tpa.enabled")) {
             getCommand("tpa")?.setExecutor(CommandTpa())
             getCommand("tpaccept")?.setExecutor(CommandTpaccept())
-            server.pluginManager.registerEvents(PlayersTeleportToOthers(), this)
+            pm.registerEvents(PlayersTeleportToOthers(), this)
         }
 
         if (config.getBoolean("auto-messages.enabled")) {
             val autoMessagesInterval = config.getLong("auto-messages.interval-seconds") * 20L
             AutoMessagesTimer().runTaskTimer(this, autoMessagesInterval, autoMessagesInterval)
+        }
+
+        if (config.getBoolean("tab.enabled")) {
+            val papiEnabled = pm.getPlugin("PlaceholderAPI") != null
+            pm.registerEvents(SendTabToPlayers(papiEnabled), this)
+            TabUpdateTimer(papiEnabled).runTaskTimer(this, 1L, 1L)
         }
     }
 }

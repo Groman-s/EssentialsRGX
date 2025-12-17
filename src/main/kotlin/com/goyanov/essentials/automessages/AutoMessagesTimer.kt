@@ -1,4 +1,4 @@
-package com.goyanov.essentials.timers
+package com.goyanov.essentials.automessages
 
 import com.goyanov.essentials.managers.translationsConfig
 import com.goyanov.rglib.RGLib
