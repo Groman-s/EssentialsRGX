@@ -1,6 +1,6 @@
 name: EssentialsRGX
 main: com.goyanov.essentials.main.EssentialsRGX
-version: 1.3.2
+version: 1.3.3
 api-version: 1.13
 softdepend:
   - PlaceholderAPI

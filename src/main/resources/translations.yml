@@ -4,9 +4,9 @@ auto-messages:
     - "Желаем вам приятной игры на сервере! ^_^"
 
 tab:
-  player-name: "%player_name%"
+  player-name: "%luckperms_prefix% %player_name%" # PAPI Expansions "LuckPerms" and "Player"
   headers:
-    - "&8&l>>=>>&r &kplay&r ☬ #ffe7b8MineCraft Сервер&r ☬ &kplay&r &8&l<<=<<&r" # PAPI Expansions "LuckPerms" and "Player"
+    - "&8&l>>=>>&r &kplay&r ☬ #ffe7b8MineCraft Сервер&r ☬ &kplay&r &8&l<<=<<&r"
     - "------------------------------------------"
   footers:
     - "------------------------------------------"
