@@ -35,7 +35,7 @@ class CommandRtp : CommandExecutor {
         }
 
         if (!sender.hasPermission("commands.rtp.unlimited")) {
-            val configCmdSecondsDelay = config.getInt("commands.rtp.delay-seconds")
+            val configCmdSecondsDelay = config.getInt("commands.rtp.cooldown-seconds")
             cooldowns[sender.uniqueId] = System.currentTimeMillis() + configCmdSecondsDelay * 1000
             Bukkit.getScheduler().scheduleSyncDelayedTask(EssentialsRGX.Companion.inst(), {
                 cooldowns.remove(sender.uniqueId)
