@@ -6,6 +6,7 @@ import com.goyanov.essentials.tab.SendTabToPlayers
 import com.goyanov.essentials.automessages.AutoMessagesTimer
 import com.goyanov.essentials.tab.TabUpdateTimer
 import com.goyanov.essentials.tpa.CommandTpa
+import com.goyanov.essentials.tpa.CommandTpaTabCompleter
 import com.goyanov.essentials.tpa.CommandTpaccept
 import com.goyanov.essentials.tpa.PlayersTeleportToOthers
 import org.bukkit.plugin.java.JavaPlugin
@@ -31,7 +32,9 @@ class EssentialsRGX : JavaPlugin() {
 
         if (config.getBoolean("commands.tpa.enabled")) {
             getCommand("tpa")?.setExecutor(CommandTpa())
+            getCommand("tpa")?.tabCompleter = CommandTpaTabCompleter()
             getCommand("tpaccept")?.setExecutor(CommandTpaccept())
+            getCommand("tpaccept")?.tabCompleter = CommandTpaTabCompleter()
             pm.registerEvents(PlayersTeleportToOthers(), this)
         }
 

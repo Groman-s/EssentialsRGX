@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.goyanov"
-version = "1.3.3"
+version = "1.3.4"
 
 repositories {
     maven("https://hub.spigotmc.org/nexus/content/groups/public/")
