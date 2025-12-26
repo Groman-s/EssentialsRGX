@@ -1,11 +1,26 @@
 package com.goyanov.essentials.automessages
 
-import com.goyanov.essentials.managers.translationsConfig
+import com.goyanov.essentials.main.EssentialsRGX
+import com.goyanov.essentials.global.managers.translationsConfig
 import com.goyanov.rglib.RGLib
 import org.bukkit.Bukkit
 import org.bukkit.scheduler.BukkitRunnable
 
-class AutoMessagesTimer() : BukkitRunnable() {
+class AutoMessagesTimer private constructor() : BukkitRunnable() {
+
+    companion object {
+        private var instance: AutoMessagesTimer? = null
+
+        fun stop() {
+            instance?.cancel()
+        }
+
+        fun start() {
+            val autoMessagesInterval = EssentialsRGX.inst().config.getLong("auto-messages.interval-seconds") * 20L
+            instance = AutoMessagesTimer()
+            instance!!.runTaskTimer(EssentialsRGX.inst(), autoMessagesInterval, autoMessagesInterval)
+        }
+    }
 
     private val messages = translationsConfig().getStringList("auto-messages.messages")
     private val prefix = translationsConfig().getString("auto-messages.prefix")

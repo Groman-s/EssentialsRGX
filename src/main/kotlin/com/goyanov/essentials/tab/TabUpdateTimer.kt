@@ -4,7 +4,20 @@ import com.goyanov.essentials.main.EssentialsRGX
 import org.bukkit.Bukkit
 import org.bukkit.scheduler.BukkitRunnable
 
-class TabUpdateTimer(val papiEnabled: Boolean) : BukkitRunnable() {
+class TabUpdateTimer private constructor(var papiEnabled: Boolean) : BukkitRunnable() {
+
+    companion object {
+        private var instance: TabUpdateTimer? = null
+
+        fun stop() {
+            instance?.cancel()
+        }
+
+        fun start(papiEnabled: Boolean) {
+            instance = TabUpdateTimer(papiEnabled)
+            instance!!.runTaskTimer(EssentialsRGX.inst(), 1L, 1L)
+        }
+    }
 
     private var headerUpdateInterval = EssentialsRGX.inst().config.getInt("tab.update-ticks.header")
     private var footerUpdateInterval = EssentialsRGX.inst().config.getInt("tab.update-ticks.footer")

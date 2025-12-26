@@ -1,4 +1,4 @@
-package com.goyanov.essentials.managers
+package com.goyanov.essentials.global.managers
 
 import com.goyanov.essentials.main.EssentialsRGX
 import com.goyanov.rglib.CustomConfig

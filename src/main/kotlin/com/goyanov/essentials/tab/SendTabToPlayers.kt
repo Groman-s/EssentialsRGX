@@ -4,12 +4,19 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 
-class SendTabToPlayers(val papiEnabled: Boolean) : Listener {
+class SendTabToPlayers private constructor(var papiEnabled: Boolean) : Listener {
+
+    companion object {
+        private var instance: SendTabToPlayers? = null
+
+        fun getInstance(): SendTabToPlayers {
+            instance ?: run { instance = SendTabToPlayers(false) }
+            return instance!!
+        }
+    }
 
     @EventHandler
     fun sendOnJoin(e: PlayerJoinEvent) {
-        sendCustomHeaders(player = e.player, papiEnabled = papiEnabled)
-        sendCustomFooters(player = e.player, papiEnabled = papiEnabled)
-        updatePlayerTabName(player = e.player, papiEnabled = papiEnabled)
+        updateFullTab(player = e.player, papiEnabled = papiEnabled)
     }
 }

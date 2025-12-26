@@ -1,6 +1,6 @@
 package com.goyanov.essentials.tab
 
-import com.goyanov.essentials.managers.translationsConfig
+import com.goyanov.essentials.global.managers.translationsConfig
 import com.goyanov.rglib.RGLib
 import me.clip.placeholderapi.PlaceholderAPI
 import org.bukkit.entity.Player
@@ -21,4 +21,10 @@ fun updatePlayerTabName(player: Player, papiEnabled: Boolean) {
     var tabName = translationsConfig().getString("tab.player-name")!!
     if (papiEnabled) { tabName = PlaceholderAPI.setPlaceholders(player, tabName) }
     player.setPlayerListName(RGLib.getColoredMessage(tabName))
+}
+
+fun updateFullTab(player: Player, papiEnabled: Boolean) {
+    sendCustomHeaders(player = player, papiEnabled = papiEnabled)
+    sendCustomFooters(player = player, papiEnabled = papiEnabled)
+    updatePlayerTabName(player = player, papiEnabled = papiEnabled)
 }
