@@ -27,10 +27,11 @@ auto-messages:
 # В формате %1$s - ник игрока (displayName), а %2$s - сообщение игрока
 chat:
   enabled: true
-  format: "%luckperms_prefix% %1$s &8➵ &f%luckperms_suffix%%2$s" # PAPI Expansions "LuckPerms"
+  format: "%luckperms_prefix% %player_name% &8➵ &f%luckperms_suffix%{message}" # PAPI Expansions "LuckPerms" and "Player"
   local-chat-radius: 100
   prefixes:
     global-chat: "&8[&cG&8]&9"
     local-chat: "&8[&aL&8]&9"
+    localspy: "&7ↀ"
   cooldown-seconds: 3
   no-recipients-sound: ENTITY_ENDERMAN_TELEPORT

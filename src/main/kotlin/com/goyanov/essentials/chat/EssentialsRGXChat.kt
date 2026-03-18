@@ -61,7 +61,7 @@ class EssentialsRGXChat private constructor(var papiEnabled: Boolean) : Listener
             if (messageIsLocal) EssentialsRGX.inst().config.getString("chat.prefixes.local-chat")
             else EssentialsRGX.inst().config.getString("chat.prefixes.global-chat")
 
-        var format = formatPrefix + EssentialsRGX.inst().config.getString("chat.format")!!
+        var format = formatPrefix + EssentialsRGX.inst().config.getString("chat.format")!!.replace("{message}", message)
 
         if (papiEnabled) {
             format = PlaceholderAPI.setPlaceholders(e.player, format)
@@ -76,9 +76,12 @@ class EssentialsRGXChat private constructor(var papiEnabled: Boolean) : Listener
             e.player.playSound(e.player.location, Sound.valueOf(EssentialsRGX.inst().config.getString("chat.no-recipients-sound")!!), 1f, 1f)
         }
 
-        Bukkit.getOnlinePlayers().forEach { player ->
-            if (playersConfig().getBoolean("${player.name.lowercase()}.localspy")) {
-                e.recipients.add(player)
+        if (messageIsLocal) {
+            Bukkit.getOnlinePlayers().forEach { player ->
+                if (e.recipients.contains(player)) return@forEach
+                if (playersConfig().getBoolean("${player.name.lowercase()}.localspy")) {
+                    player.sendMessage(RGLib.getColoredMessage(EssentialsRGX.inst().config.getString("chat.prefixes.localspy")) + " " + e.format)
+                }
             }
         }
 
