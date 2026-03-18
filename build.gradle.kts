@@ -15,9 +15,9 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    compileOnly("org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.11-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.5")
-    implementation("com.github.Groman-s:RGLib:v1.18")
+    implementation("com.github.Groman-s:RGLib:v1.19")
 }
 
 tasks.register<Copy>("jarToPluginsFolder") {
