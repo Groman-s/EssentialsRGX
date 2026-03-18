@@ -7,6 +7,7 @@ chat:
   no-recipients-notification:
     chat: "&8&l| &7Твоё сообщение никто не увидел...\n&8&l| &7Чтобы сообщение увидели все игроки на сервере,\n&8&l| &7ставь перед ним !"
     action-bar: "&cТвоё сообщение не было замечено"
+  cooldown: "&8&l| &cТы не можешь писать в чат ещё {seconds} секунд!"
 
 tab:
   player-name: "%luckperms_prefix% %player_name%" # PAPI Expansions "LuckPerms" and "Player"

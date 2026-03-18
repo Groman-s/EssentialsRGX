@@ -32,4 +32,5 @@ chat:
   prefixes:
     global-chat: "&8[&cG&8]&9"
     local-chat: "&8[&aL&8]&9"
+  cooldown-seconds: 3
   no-recipients-sound: ENTITY_ENDERMAN_TELEPORT
