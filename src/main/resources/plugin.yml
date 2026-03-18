@@ -24,3 +24,7 @@ commands:
     description: "Принятие запроса на телепортацию от игрока"
     permission: EssentialsRGX.command.tpaccept
     permission-message: "Ты не можешь этого сделать!"
+  localspy:
+    description: "Даёт возможность видеть общение игроков за пределами радиуса локального чата"
+    permission: EssentialsRGX.command.localspy
+    permission-message: "Ты не можешь этого сделать!"

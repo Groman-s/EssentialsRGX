@@ -1,5 +1,6 @@
 package com.goyanov.essentials.chat
 
+import com.goyanov.essentials.global.managers.playersConfig
 import com.goyanov.essentials.global.managers.translationsConfig
 import com.goyanov.essentials.main.EssentialsRGX
 import com.goyanov.rglib.RGLib
@@ -10,6 +11,7 @@ import org.bukkit.Sound
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
+import org.bukkit.event.player.PlayerJoinEvent
 
 class EssentialsRGXChat private constructor(var papiEnabled: Boolean) : Listener {
 
@@ -74,12 +76,30 @@ class EssentialsRGXChat private constructor(var papiEnabled: Boolean) : Listener
             e.player.playSound(e.player.location, Sound.valueOf(EssentialsRGX.inst().config.getString("chat.no-recipients-sound")!!), 1f, 1f)
         }
 
+        Bukkit.getOnlinePlayers().forEach { player ->
+            if (playersConfig().getBoolean("${player.name.lowercase()}.localspy")) {
+                e.recipients.add(player)
+            }
+        }
+
         if (!canSpam) {
             val cooldownSeconds = EssentialsRGX.inst().config.getInt("chat.cooldown-seconds")
             cooldowns[e.player.uniqueId] = System.currentTimeMillis() + cooldownSeconds * 1000
             Bukkit.getScheduler().scheduleSyncDelayedTask(EssentialsRGX.inst(), {
                 cooldowns.remove(e.player.uniqueId)
             }, cooldownSeconds * 20L)
+        }
+    }
+
+    @EventHandler
+    fun notifyLocalSpyEnabledOnJoin(e: PlayerJoinEvent) {
+
+        if (!e.player.hasPermission("EssentialsRGX.command.localspy")) return
+
+        if (playersConfig().getBoolean("${e.player.name.lowercase()}.localspy")) {
+            e.player.sendMessage(RGLib.getColoredMessage(translationsConfig().getString("chat.localspy.enabled")))
+        } else {
+            e.player.sendMessage(RGLib.getColoredMessage(translationsConfig().getString("chat.localspy.disabled")))
         }
     }
 }

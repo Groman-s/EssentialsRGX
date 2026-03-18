@@ -2,6 +2,7 @@ package com.goyanov.essentials.main
 
 import com.goyanov.essentials.automessages.AutoMessagesTimer
 import com.goyanov.essentials.chat.EssentialsRGXChat
+import com.goyanov.essentials.chat.commands.CommandLocalspy
 import com.goyanov.essentials.global.commands.CommandEreload
 import com.goyanov.essentials.global.managers.ConfigManager
 import com.goyanov.essentials.rtp.CommandRtp
@@ -75,6 +76,7 @@ class EssentialsRGX : JavaPlugin() {
         getCommand("tpa")?.tabCompleter = CommandTpaTabCompleter()
         getCommand("tpaccept")?.setExecutor(CommandTpaccept())
         getCommand("tpaccept")?.tabCompleter = CommandTpaTabCompleter()
+        getCommand("localspy")?.setExecutor(CommandLocalspy())
         pm.registerEvents(PlayersTeleportToOthers(), this)
 
         // commands.ereload

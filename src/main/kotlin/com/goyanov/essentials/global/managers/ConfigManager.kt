@@ -14,15 +14,18 @@ class ConfigManager {
         }
 
         fun getConfig(type: ConfigType) : CustomConfig = configs[type] ?: run {
-            val config = CustomConfig(type.fileName, true, EssentialsRGX.inst())
+            val config = CustomConfig(type.fileName, type.fromJar, EssentialsRGX.inst())
             configs[type] = config
             config
         }
     }
 }
 
-enum class ConfigType(val fileName: String) {
-    TRANSLATIONS("translations.yml"),
+enum class ConfigType(val fileName: String, val fromJar: Boolean) {
+    TRANSLATIONS("translations.yml", true),
+    PLAYERS("players.yml", false),
 }
 
 fun translationsConfig(): FileConfiguration = ConfigManager.getConfig(ConfigType.TRANSLATIONS).config
+
+fun playersConfig(): FileConfiguration = ConfigManager.getConfig(ConfigType.PLAYERS).config
