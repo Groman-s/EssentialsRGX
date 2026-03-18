@@ -24,7 +24,6 @@ auto-messages:
   enabled: true
   interval-seconds: 120
 
-# В формате %1$s - ник игрока (displayName), а %2$s - сообщение игрока
 chat:
   enabled: true
   format: "%luckperms_prefix% %player_name% &8➵ &f%luckperms_suffix%{message}" # PAPI Expansions "LuckPerms" and "Player"
