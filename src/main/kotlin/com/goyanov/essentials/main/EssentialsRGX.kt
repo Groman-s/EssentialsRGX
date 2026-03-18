@@ -1,6 +1,7 @@
 package com.goyanov.essentials.main
 
 import com.goyanov.essentials.automessages.AutoMessagesTimer
+import com.goyanov.essentials.chat.EssentialsRGXChat
 import com.goyanov.essentials.global.commands.CommandEreload
 import com.goyanov.essentials.global.managers.ConfigManager
 import com.goyanov.essentials.rtp.CommandRtp
@@ -13,6 +14,7 @@ import com.goyanov.essentials.tpa.CommandTpaTabCompleter
 import com.goyanov.essentials.tpa.CommandTpaccept
 import com.goyanov.essentials.tpa.PlayersTeleportToOthers
 import org.bukkit.Bukkit
+import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -35,17 +37,25 @@ class EssentialsRGX : JavaPlugin() {
             AutoMessagesTimer.start()
         }
 
+        val papiEnabled = server.pluginManager.getPlugin("PlaceholderAPI") != null
+
         // tab
         PlayerJoinEvent.getHandlerList().unregister(SendTabToPlayers.getInstance())
         TabUpdateTimer.stop()
         if (config.getBoolean("tab.enabled")) {
-            val papiEnabled = server.pluginManager.getPlugin("PlaceholderAPI") != null
             SendTabToPlayers.getInstance().papiEnabled = papiEnabled
             server.pluginManager.registerEvents(SendTabToPlayers.getInstance(), this)
             TabUpdateTimer.start(papiEnabled)
             Bukkit.getOnlinePlayers().forEach { player ->
                 updateFullTab(player = player, papiEnabled = papiEnabled)
             }
+        }
+
+        // chat
+        AsyncPlayerChatEvent.getHandlerList().unregister(EssentialsRGXChat.getInstance())
+        if (config.getBoolean("chat.enabled")) {
+            EssentialsRGXChat.getInstance().papiEnabled = papiEnabled
+            server.pluginManager.registerEvents(EssentialsRGXChat.getInstance(), this)
         }
     }
 

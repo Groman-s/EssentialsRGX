@@ -3,6 +3,11 @@ auto-messages:
   messages:
     - "Желаем вам приятной игры на сервере! ^_^"
 
+chat:
+  no-recipients-notification:
+    chat: "&8&l| &7Твоё сообщение никто не увидел...\n&8&l| &7Чтобы сообщение увидели все игроки на сервере,\n&8&l| &7ставь перед ним !"
+    action-bar: "&cТвоё сообщение не было замечено"
+
 tab:
   player-name: "%luckperms_prefix% %player_name%" # PAPI Expansions "LuckPerms" and "Player"
   headers:
