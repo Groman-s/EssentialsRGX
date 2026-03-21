@@ -34,3 +34,4 @@ chat:
     localspy: "&7ↀ"
   cooldown-seconds: 3
   no-recipients-sound: ENTITY_ENDERMAN_TELEPORT
+  block-ad: true

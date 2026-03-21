@@ -7,6 +7,7 @@ import com.goyanov.rglib.RGLib
 import java.util.UUID
 import me.clip.placeholderapi.PlaceholderAPI
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.Sound
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -78,17 +79,37 @@ class EssentialsRGXChat private constructor(var papiEnabled: Boolean) : Listener
         e.format = format
         e.message = message
 
-        if (e.recipients.size == 1) {
-            e.player.sendMessage(RGLib.formatWithSimpleColors(translationsConfig().getString("chat.no-recipients-notification.chat")))
-            RGLib.sendActionBarMessage(e.player, RGLib.formatWithSimpleColors(translationsConfig().getString("chat.no-recipients-notification.action-bar")))
-            e.player.playSound(e.player.location, Sound.valueOf(EssentialsRGX.inst().config.getString("chat.no-recipients-sound")!!), 1f, 1f)
+        val originalRecipientsSize = e.recipients.size
+
+        var messageIsAd = false
+
+        if (EssentialsRGX.inst().config.getBoolean("chat.block-ad")) {
+            if (!e.player.hasPermission("EssentialsRGX.chat.can-ad")) {
+                val colorStripped = ChatColor.stripColor(e.message)!!
+                val analyzed = colorStripped.replace(" ", "").lowercase()
+                if (analyzed.matches(".*\\.[a-z]{2,3}.*".toRegex())) {
+                    e.recipients.clear()
+                    e.recipients.add(e.player)
+                    val alertMessage = RGLib.getColoredMessage("#e55353Игрок #bf7171${e.player.name}#e55353 пытался рекламировать: #bf7171\"${colorStripped}\"#e55353. Сообщение не было отправлено.")
+                    Bukkit.broadcast(alertMessage, "EssentialsRGX.chat.ad-alert")
+                    EssentialsRGX.inst().logger.warning(ChatColor.stripColor(alertMessage))
+                    messageIsAd = true
+                }
+            }
         }
 
         if (messageIsLocal) {
-            Bukkit.getOnlinePlayers().forEach { player ->
-                if (e.recipients.contains(player)) return@forEach
-                if (playersConfig().getBoolean("${player.name.lowercase()}.localspy")) {
-                    player.sendMessage(RGLib.getColoredMessage(EssentialsRGX.inst().config.getString("chat.prefixes.localspy")) + " " + e.format)
+            if (originalRecipientsSize == 1) {
+                e.player.sendMessage(RGLib.formatWithSimpleColors(translationsConfig().getString("chat.no-recipients-notification.chat")))
+                RGLib.sendActionBarMessage(e.player, RGLib.formatWithSimpleColors(translationsConfig().getString("chat.no-recipients-notification.action-bar")))
+                e.player.playSound(e.player.location, Sound.valueOf(EssentialsRGX.inst().config.getString("chat.no-recipients-sound")!!), 1f, 1f)
+            }
+            if (!messageIsAd) {
+                Bukkit.getOnlinePlayers().forEach { player ->
+                    if (e.recipients.contains(player)) return@forEach
+                    if (playersConfig().getBoolean("${player.name.lowercase()}.localspy")) {
+                        player.sendMessage(RGLib.getColoredMessage(EssentialsRGX.inst().config.getString("chat.prefixes.localspy")) + " " + e.format)
+                    }
                 }
             }
         }
