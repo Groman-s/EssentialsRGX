@@ -34,4 +34,7 @@ chat:
     localspy: "&7ↀ"
   cooldown-seconds: 3
   no-recipients-sound: ENTITY_ENDERMAN_TELEPORT
-  block-ad: true
+  anti-ad:
+    enabled: true
+    forbidden-patterns:
+      - .*\.[a-z]{2,3}.*

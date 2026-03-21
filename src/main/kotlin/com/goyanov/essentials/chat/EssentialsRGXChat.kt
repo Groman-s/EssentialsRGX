@@ -83,17 +83,28 @@ class EssentialsRGXChat private constructor(var papiEnabled: Boolean) : Listener
 
         var messageIsAd = false
 
-        if (EssentialsRGX.inst().config.getBoolean("chat.block-ad")) {
+        if (EssentialsRGX.inst().config.getBoolean("chat.anti-ad.enabled")) {
             if (!e.player.hasPermission("EssentialsRGX.chat.can-ad")) {
                 val colorStripped = ChatColor.stripColor(e.message)!!
-                val analyzed = colorStripped.replace(" ", "").lowercase()
-                if (analyzed.matches(".*\\.[a-z]{2,3}.*".toRegex())) {
-                    e.recipients.clear()
-                    e.recipients.add(e.player)
-                    val alertMessage = RGLib.getColoredMessage("#e55353Игрок #bf7171${e.player.name}#e55353 пытался рекламировать: #bf7171\"${colorStripped}\"#e55353. Сообщение не было отправлено.")
-                    Bukkit.broadcast(alertMessage, "EssentialsRGX.chat.ad-alert")
-                    EssentialsRGX.inst().logger.warning(ChatColor.stripColor(alertMessage))
-                    messageIsAd = true
+                val analyzed = colorStripped.lowercase()
+                    .replace(" ", "")
+                    .replace("о", "o")
+                    .replace("а", "a")
+                    .replace("е", "e")
+                    .replace("р", "p")
+                    .replace("с", "c")
+                    .replace("у", "y")
+                    .replace("х", "x")
+                val forbiddenPatterns = EssentialsRGX.inst().config.getStringList("chat.anti-ad.forbidden-patterns")
+                for (pattern in forbiddenPatterns) {
+                    if (analyzed.matches(pattern.toRegex())) {
+                        e.recipients.clear()
+                        e.recipients.add(e.player)
+                        val alertMessage = RGLib.getColoredMessage("#e55353Игрок #bf7171${e.player.name}#e55353 пытался рекламировать: #bf7171\"${colorStripped}\"#e55353. Сообщение не было отправлено.")
+                        Bukkit.broadcast(alertMessage, "EssentialsRGX.chat.ad-alert")
+                        EssentialsRGX.inst().logger.warning(ChatColor.stripColor(alertMessage))
+                        messageIsAd = true
+                    }
                 }
             }
         }
