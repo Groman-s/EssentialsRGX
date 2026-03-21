@@ -61,14 +61,22 @@ class EssentialsRGXChat private constructor(var papiEnabled: Boolean) : Listener
             if (messageIsLocal) EssentialsRGX.inst().config.getString("chat.prefixes.local-chat")
             else EssentialsRGX.inst().config.getString("chat.prefixes.global-chat")
 
-        var format = formatPrefix + EssentialsRGX.inst().config.getString("chat.format")!!.replace("{message}", message)
+        var format = formatPrefix + EssentialsRGX.inst().config.getString("chat.format")!!
 
         if (papiEnabled) {
             format = PlaceholderAPI.setPlaceholders(e.player, format)
         }
 
-        e.message = RGLib.getColoredMessage(message)
-        e.format = RGLib.getColoredMessage(format)
+        format = RGLib.getColoredMessage(format)
+
+        if (e.player.hasPermission("EssentialsRGX.chat.color")) {
+            message = RGLib.getColoredMessage(message)
+        }
+
+        format = format.replace("{message}", message)
+
+        e.format = format
+        e.message = message
 
         if (e.recipients.size == 1) {
             e.player.sendMessage(RGLib.formatWithSimpleColors(translationsConfig().getString("chat.no-recipients-notification.chat")))
