@@ -3,6 +3,7 @@ package com.goyanov.essentials.main
 import com.goyanov.essentials.automessages.AutoMessagesTimer
 import com.goyanov.essentials.chat.EssentialsRGXChat
 import com.goyanov.essentials.chat.commands.CommandLocalspy
+import com.goyanov.essentials.first_join_greeting.FirstJoinGreeting
 import com.goyanov.essentials.global.commands.CommandEreload
 import com.goyanov.essentials.global.managers.ConfigManager
 import com.goyanov.essentials.rtp.CommandRtp
@@ -36,6 +37,12 @@ class EssentialsRGX : JavaPlugin() {
         AutoMessagesTimer.stop()
         if (config.getBoolean("auto-messages.enabled")) {
             AutoMessagesTimer.start()
+        }
+
+        // first-greeting
+        PlayerJoinEvent.getHandlerList().unregister(FirstJoinGreeting.getInstance())
+        if (config.getBoolean("first-join-greeting")) {
+            server.pluginManager.registerEvents(FirstJoinGreeting.getInstance(), this)
         }
 
         val papiEnabled = server.pluginManager.getPlugin("PlaceholderAPI") != null
