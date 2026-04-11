@@ -76,7 +76,7 @@ class EssentialsRGXChat private constructor(var papiEnabled: Boolean) : Listener
 
         format = format.replace("{message}", message)
 
-        e.format = format
+        e.format = format.replace("%", "%%")
         e.message = message
 
         val originalRecipientsSize = e.recipients.size
