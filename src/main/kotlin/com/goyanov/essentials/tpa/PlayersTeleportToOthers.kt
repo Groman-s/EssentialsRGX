@@ -1,5 +1,6 @@
 package com.goyanov.essentials.tpa
 
+import com.goyanov.rglib.RGLib
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -12,7 +13,7 @@ class PlayersTeleportToOthers : Listener {
         TpaActiveRequests.remove(playerInitiator = e.tpaInitiator, playerTarget = e.tpaTarget)
         e.tpaTarget.sendMessage("§8§l| §aТы принял запрос ${e.tpaInitiator.name} на телепортацию к тебе.")
         e.tpaInitiator.sendMessage("§8§l| §a${e.tpaTarget.name} принял твой запрос на телепортацию.")
-        e.tpaInitiator.teleport(e.tpaTarget)
+        e.tpaInitiator.teleport(RGLib.findNearestSafeLocation(e.tpaTarget.location))
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
